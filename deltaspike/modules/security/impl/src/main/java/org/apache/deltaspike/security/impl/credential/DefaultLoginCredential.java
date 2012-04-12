@@ -40,18 +40,6 @@ public class DefaultLoginCredential implements LoginCredential
 
     private String userId;
 
-    @Override
-    public String getUserId()
-    {
-        return userId;
-    }
-
-    @Override
-    public void setUserId(String userId)
-    {
-        this.userId = userId;
-    }
-
     public Credential getCredential()
     {
         return credential;
