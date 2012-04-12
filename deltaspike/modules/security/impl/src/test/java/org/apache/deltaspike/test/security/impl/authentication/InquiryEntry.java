@@ -18,23 +18,25 @@
  */
 package org.apache.deltaspike.test.security.impl.authentication;
 
+import org.apache.deltaspike.security.api.Credential;
+
 import javax.enterprise.inject.Typed;
 
 @Typed()
 class InquiryEntry
 {
-    private final String userName;
+    private final Credential credential;
     private final Inquiry inquiry;
 
-    InquiryEntry(String userName, Inquiry inquiry)
+    InquiryEntry(Credential credential, Inquiry inquiry)
     {
-        this.userName = userName;
+        this.credential = credential;
         this.inquiry = inquiry;
     }
 
-    String getUserName()
+    String getCredential()
     {
-        return userName;
+        return credential.getUsername();
     }
 
     Inquiry getInquiry()
@@ -60,7 +62,7 @@ class InquiryEntry
         {
             return false;
         }
-        if (!userName.equals(that.userName))
+        if (!credential.equals(that.credential))
         {
             return false;
         }
@@ -71,7 +73,7 @@ class InquiryEntry
     @Override
     public int hashCode()
     {
-        int result = userName.hashCode();
+        int result = credential.hashCode();
         result = 31 * result + inquiry.hashCode();
         return result;
     }

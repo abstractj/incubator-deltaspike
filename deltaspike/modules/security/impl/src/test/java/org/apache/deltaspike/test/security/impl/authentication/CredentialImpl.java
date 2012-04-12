@@ -16,25 +16,48 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.deltaspike.security.api;
+package org.apache.deltaspike.test.security.impl.authentication;
 
-import javax.enterprise.inject.Typed;
-import java.io.Serializable;
+import org.apache.deltaspike.security.api.Credential;
 
-@Typed()
-public class User implements Serializable
+import javax.enterprise.inject.Model;
+
+@Model
+public class CredentialImpl implements Credential
 {
-    private static final long serialVersionUID = -2234530384311026364L;
+    private String username;
+    private String password;
 
-    private final String id;
-
-    public User(String id)
+    public CredentialImpl()
     {
-        this.id = id;
     }
 
-    public String getId()
+    public CredentialImpl(String username)
     {
-        return id;
+        this.username = username;
+    }
+
+    @Override
+    public void setPassword(String password)
+    {
+        this.password = password;
+    }
+
+    @Override
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
+    @Override
+    public String getPassword()
+    {
+        return password;
+    }
+
+    @Override
+    public String getUsername()
+    {
+        return username;
     }
 }

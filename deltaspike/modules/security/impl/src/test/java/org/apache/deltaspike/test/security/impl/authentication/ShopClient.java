@@ -19,7 +19,7 @@
 package org.apache.deltaspike.test.security.impl.authentication;
 
 import org.apache.deltaspike.security.api.Identity;
-import org.apache.deltaspike.security.api.credential.Credential;
+import org.apache.deltaspike.security.api.credential.CredentialAuthInfo;
 import org.apache.deltaspike.security.api.credential.LoginCredential;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -37,17 +37,12 @@ public class ShopClient
     @Inject
     private Shop shop;
 
-    public void login(String userName, final String password)
+    public void login(CredentialAuthInfo credentialAuthInfo)
     {
-        this.loginCredential.setUserId(userName);
+        //this.loginCredential.setCredentialId(userName);
         //TODO discuss #setSecurityToken
-        this.loginCredential.setCredential(new Credential<String>() {
-            @Override
-            public String getValue()
-            {
-                return password;
-            }
-        });
+        this.loginCredential.setCredentialAuthInfo(credentialAuthInfo);
+
 
         this.identity.login();
     }

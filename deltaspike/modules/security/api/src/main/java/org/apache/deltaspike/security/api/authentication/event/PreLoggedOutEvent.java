@@ -18,22 +18,22 @@
  */
 package org.apache.deltaspike.security.api.authentication.event;
 
-import org.apache.deltaspike.security.api.User;
+import org.apache.deltaspike.security.api.Credential;
 
 /**
- * This event is raised just before the user un-authenticates
+ * This event is raised just before the credential un-authenticates
  */
 public class PreLoggedOutEvent 
 {
-    private User user;
+    private Credential credential;
 
-    public PreLoggedOutEvent(User user)
+    public PreLoggedOutEvent(Credential credential)
     {
-        this.user = user;
+        this.credential = credential;
     }
 
-    public User getUser()
+    public Credential getCredential()
     {
-        return user;
+        return credential;
     }
 }

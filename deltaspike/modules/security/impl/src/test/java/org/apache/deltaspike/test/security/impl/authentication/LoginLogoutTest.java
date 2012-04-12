@@ -23,6 +23,7 @@ import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.apache.deltaspike.core.impl.exclude.extension.ExcludeExtension;
 import org.apache.deltaspike.security.api.Identity;
 import org.apache.deltaspike.security.api.authentication.UnexpectedCredentialException;
+import org.apache.deltaspike.security.api.credential.CredentialAuthInfo;
 import org.apache.deltaspike.security.api.credential.LoginCredential;
 import org.apache.deltaspike.test.util.ArchiveUtils;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -87,15 +88,16 @@ public class LoginLogoutTest
     {
         final String userName = "spike";
         final String password = "apache";
-        
+
+        CredentialAuthInfo credentialAuthInfo = new TestCredentialAuthInfo(userName, password);
         //init
-        this.authenticator.register(userName, password);
+        this.authenticator.register(credentialAuthInfo);
 
         //start
-        this.shopClient.login(userName, password);
+        this.shopClient.login(credentialAuthInfo);
 
         Assert.assertTrue(this.identity.isLoggedIn());
-        Assert.assertEquals(userName, this.identity.getUser().getId());
+        Assert.assertEquals(userName, this.identity.getCredential().getUsername());
 
         Assert.assertNotNull(this.shopClient.requestNewProduct("Security module for DeltaSpike"));
 
@@ -107,7 +109,7 @@ public class LoginLogoutTest
         Assert.assertNotNull(this.shopClient.requestNewProduct("I18n module for DeltaSpike"));
 
         Assert.assertEquals(1, this.testInquiryStorage.getUserInquiries().size());
-        Assert.assertEquals(userName, this.testInquiryStorage.getUserInquiries().iterator().next().getUserName());
+        Assert.assertEquals(userName, this.testInquiryStorage.getUserInquiries().iterator().next().getCredential());
 
         Assert.assertEquals(1, this.testInquiryStorage.getAnonymInquiries().size());
 
@@ -121,11 +123,12 @@ public class LoginLogoutTest
         final String userName = "spike";
         final String password = "apache";
 
+        CredentialAuthInfo credentialAuthInfo = new TestCredentialAuthInfo(userName, password);
         //init
-        this.authenticator.register(userName, password);
+        this.authenticator.register(credentialAuthInfo);
 
         //start
-        this.shopClient.login(userName, "123");
+        this.shopClient.login(new TestCredentialAuthInfo(userName, "123"));
 
         Assert.assertFalse(this.identity.isLoggedIn());
     }
@@ -137,21 +140,23 @@ public class LoginLogoutTest
         final String userName = "spike";
         final String password = "apache";
 
+        CredentialAuthInfo credentialAuthInfo = new TestCredentialAuthInfo(userName, password);
         //init
-        this.authenticator.register(userName, password);
+        this.authenticator.register(credentialAuthInfo);
 
         //start
-        this.shopClient.login(userName, password);
+        this.shopClient.login(credentialAuthInfo);
 
         Assert.assertTrue(this.identity.isLoggedIn());
-        Assert.assertEquals(userName, this.identity.getUser().getId());
+        Assert.assertEquals(userName, this.identity.getCredential().getUsername());
 
         //X TODO stop and start new request via ContextControl - instead of:
         BeanProvider.getContextualReference(LoginCredential.class).invalidate();
 
         try
         {
-            this.shopClient.login("xyz", "123");
+            credentialAuthInfo = new TestCredentialAuthInfo("xyz", "123");
+            this.shopClient.login(credentialAuthInfo);
         }
         catch (UnexpectedCredentialException e)
         {

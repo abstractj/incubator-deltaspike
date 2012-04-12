@@ -19,8 +19,8 @@
 package org.apache.deltaspike.security.impl.authentication;
 
 import org.apache.deltaspike.core.util.ExceptionUtils;
+import org.apache.deltaspike.security.api.Credential;
 import org.apache.deltaspike.security.api.Identity;
-import org.apache.deltaspike.security.api.User;
 import org.apache.deltaspike.security.api.authentication.AuthenticationException;
 import org.apache.deltaspike.security.api.authentication.UnexpectedCredentialException;
 import org.apache.deltaspike.security.api.authentication.event.AlreadyLoggedInEvent;
@@ -65,22 +65,22 @@ public class DefaultIdentity implements Identity
      */
     private boolean authenticating;
 
-    private User user;
+    private Credential credential;
 
     public boolean isLoggedIn() 
     {
-        // If there is a user set, then the user is logged in.
-        return this.user != null;
+        // If there is a credential set, then the credential is logged in.
+        return this.credential != null;
     }
 
     @Override
-    public User getUser()
+    public Credential getCredential()
     {
-        return this.user;
+        return this.credential;
     }
 
     @Override
-    public AuthenticationResult login() 
+    public AuthenticationResult login()
     {
         try 
         {
@@ -88,8 +88,10 @@ public class DefaultIdentity implements Identity
             {
                 if (isAuthenticationRequestWithDifferentUserId())
                 {
-                    throw new UnexpectedCredentialException("active user: " + this.user.getId() +
-                            " provided credentials: " + this.loginCredential.getUserId());
+                    throw new UnexpectedCredentialException("active credential: " +
+                            this.credential.getUsername() +
+                            " provided credentials: " +
+                            this.loginCredential.getCredentialAuthInfo().getCredentialId());
                 }
 
                 beanManager.fireEvent(new AlreadyLoggedInEvent());
@@ -100,7 +102,8 @@ public class DefaultIdentity implements Identity
 
             if (success) 
             {
-                beanManager.fireEvent(new LoggedInEvent()); //X TODO beanManager.fireEvent(new LoggedInEvent(user));
+                beanManager.fireEvent(new LoggedInEvent());
+                //X TODO beanManager.fireEvent(new LoggedInEvent(credential));
                 return AuthenticationResult.SUCCESS;
             }
 
@@ -125,8 +128,9 @@ public class DefaultIdentity implements Identity
 
     private boolean isAuthenticationRequestWithDifferentUserId()
     {
-        return isLoggedIn() && this.loginCredential.getUserId() != null &&
-                !this.loginCredential.getUserId().equals(this.user.getId());
+        return isLoggedIn() && this.loginCredential.getCredentialAuthInfo().getCredentialId() != null &&
+                !this.loginCredential.getCredentialAuthInfo()
+                        .getCredentialId().equals(this.credential.getUsername());
     }
 
     protected boolean authenticate() throws AuthenticationException 
@@ -155,7 +159,7 @@ public class DefaultIdentity implements Identity
             if (activeAuthenticator.getStatus() == AuthenticationStatus.SUCCESS)
             {
                 postAuthenticate(activeAuthenticator);
-                this.user = activeAuthenticator.getUser();
+                this.credential = activeAuthenticator.getCredential();
                 return true;
             }
         } 
@@ -199,9 +203,9 @@ public class DefaultIdentity implements Identity
     {
         if (isLoggedIn())
         {
-            beanManager.fireEvent(new PreLoggedOutEvent(this.user));
+            beanManager.fireEvent(new PreLoggedOutEvent(this.credential));
 
-            PostLoggedOutEvent postLoggedOutEvent = new PostLoggedOutEvent(this.user);
+            PostLoggedOutEvent postLoggedOutEvent = new PostLoggedOutEvent(this.credential);
 
             unAuthenticate(invalidateLoginCredential);
 
@@ -214,7 +218,7 @@ public class DefaultIdentity implements Identity
      */
     private void unAuthenticate(boolean invalidateLoginCredential)
     {
-        this.user = null;
+        this.credential = null;
 
         if (invalidateLoginCredential)
         {

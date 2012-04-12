@@ -19,7 +19,7 @@
 
 package org.apache.deltaspike.security.spi.authentication;
 
-import org.apache.deltaspike.security.api.User;
+import org.apache.deltaspike.security.api.Credential;
 
 /**
  * An Authenticator implementation is responsible for managing the user authentication process. 
@@ -39,5 +39,5 @@ public interface Authenticator
 
     AuthenticationStatus getStatus();
 
-    User getUser();
+    Credential getCredential();
 }

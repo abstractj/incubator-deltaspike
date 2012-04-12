@@ -16,24 +16,17 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.deltaspike.security.api.authentication.event;
+package org.apache.deltaspike.security.api.credential;
 
-import org.apache.deltaspike.security.api.Credential;
+import java.io.Serializable;
 
 /**
- * This event is raised just after the credential un-authenticates
+ * Contains a single credential, such as a password
  */
-public class PostLoggedOutEvent 
+public interface CredentialAuthInfo extends Serializable
 {
-    private Credential credential;
-
-    public PostLoggedOutEvent(Credential credential)
-    {
-        this.credential = credential;
-    }
-
-    public Credential getCredential()
-    {
-        return credential;
-    }
+    String getCredentialId();
+    String getValue();
+    void setCredentialId(String credentialId);
+    void setValue(String value);
 }
