@@ -22,9 +22,8 @@ import org.apache.deltaspike.core.api.provider.BeanManagerProvider;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.apache.deltaspike.core.impl.exclude.extension.ExcludeExtension;
 import org.apache.deltaspike.security.api.Identity;
-import org.apache.deltaspike.security.api.User;
 import org.apache.deltaspike.security.api.authentication.UnexpectedCredentialException;
-import org.apache.deltaspike.security.api.credential.Credential;
+import org.apache.deltaspike.security.api.credential.User;
 import org.apache.deltaspike.security.api.credential.LoginCredential;
 import org.apache.deltaspike.test.util.ArchiveUtils;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -90,15 +89,15 @@ public class LoginLogoutTest
         final String userName = "spike";
         final String password = "apache";
 
-        Credential credential = new UserCredential(userName, password);
+        User user = new TestUser(userName, password);
         //init
-        this.authenticator.register(credential);
+        this.authenticator.register(user);
 
         //start
-        this.shopClient.login(credential);
+        this.shopClient.login(user);
 
         Assert.assertTrue(this.identity.isLoggedIn());
-        Assert.assertEquals(userName, this.identity.getUser().getUsername());
+        Assert.assertEquals(userName, this.identity.getCredential().getUsername());
 
         Assert.assertNotNull(this.shopClient.requestNewProduct("Security module for DeltaSpike"));
 
@@ -124,12 +123,12 @@ public class LoginLogoutTest
         final String userName = "spike";
         final String password = "apache";
 
-        Credential credential = new UserCredential(userName, password);
+        User user = new TestUser(userName, password);
         //init
-        this.authenticator.register(credential);
+        this.authenticator.register(user);
 
         //start
-        this.shopClient.login(new UserCredential(userName, "123"));
+        this.shopClient.login(new TestUser(userName, "123"));
 
         Assert.assertFalse(this.identity.isLoggedIn());
     }
@@ -141,23 +140,23 @@ public class LoginLogoutTest
         final String userName = "spike";
         final String password = "apache";
 
-        Credential credential = new UserCredential(userName, password);
+        User user = new TestUser(userName, password);
         //init
-        this.authenticator.register(credential);
+        this.authenticator.register(user);
 
         //start
-        this.shopClient.login(credential);
+        this.shopClient.login(user);
 
         Assert.assertTrue(this.identity.isLoggedIn());
-        Assert.assertEquals(userName, this.identity.getUser().getUsername());
+        Assert.assertEquals(userName, this.identity.getCredential().getUsername());
 
         //X TODO stop and start new request via ContextControl - instead of:
         BeanProvider.getContextualReference(LoginCredential.class).invalidate();
 
         try
         {
-            credential = new UserCredential("xyz", "123");
-            this.shopClient.login(credential);
+            user = new TestUser("xyz", "123");
+            this.shopClient.login(user);
         }
         catch (UnexpectedCredentialException e)
         {

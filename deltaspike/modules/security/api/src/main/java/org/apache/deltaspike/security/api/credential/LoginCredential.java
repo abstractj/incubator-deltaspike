@@ -24,9 +24,9 @@ package org.apache.deltaspike.security.api.credential;
  */
 public interface LoginCredential
 {
-    Credential getCredential();
+    User getUser();
 
-    void setCredential(Credential credential);
+    void setUser(User user);
 
     void invalidate();
 }

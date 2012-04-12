@@ -16,16 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.deltaspike.security.api;
+package org.apache.deltaspike.security.api.credential;
 
-import java.io.Serializable;
-
-public interface User extends Serializable {
-    void setPassword(String password);
-
-    void setUsername(String username);
-
-    String getPassword();
-
-    String getUsername();
+/**
+ * Contains a single credential, such as a password
+ */
+public interface User<T>
+{
+    T getUserId();
+    T getValue();
 }

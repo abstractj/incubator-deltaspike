@@ -1,33 +1,24 @@
 package org.apache.deltaspike.test.security.impl.authentication;
 
-import org.apache.deltaspike.security.api.User;
+import org.apache.deltaspike.security.api.credential.User;
 
 public class TestUser implements User {
 
-    private String username;
-    private String password;
+    private String userId;
+    private String value;
 
-    public TestUser(String username) {
-        this.username = username;
+    public TestUser(String userId, String value) {
+        this.userId = userId;
+        this.value = value;
     }
 
     @Override
-    public void setPassword(String password) {
-        this.password = password;
+    public String getUserId() {
+        return userId;
     }
 
     @Override
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public String getUsername() {
-        return username;  //To change body of implemented methods use File | Settings | File Templates.
+    public String getValue() {
+        return value;
     }
 }

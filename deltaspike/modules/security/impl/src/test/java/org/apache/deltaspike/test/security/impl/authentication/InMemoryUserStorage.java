@@ -19,7 +19,7 @@
 package org.apache.deltaspike.test.security.impl.authentication;
 
 import org.apache.deltaspike.core.api.exclude.annotation.Exclude;
-import org.apache.deltaspike.security.api.credential.Credential;
+import org.apache.deltaspike.security.api.credential.User;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,7 +34,7 @@ class InMemoryUserStorage
         return simpleUserPasswordMapping.get(userName);
     }
 
-    public static void setPassword(Credential credential) {
-        simpleUserPasswordMapping.put(credential.getUserId().toString(), credential.getValue().toString());
+    public static void setPassword(User user) {
+        simpleUserPasswordMapping.put(user.getUserId().toString(), user.getValue().toString());
     }
 }
