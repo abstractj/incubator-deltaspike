@@ -52,7 +52,6 @@
     </scm>
 
     <modules>
-        <module>checkstyle-rules</module>
         <module>parent</module>
         <module>test-utils</module>
         <module>core</module>
