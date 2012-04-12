@@ -90,11 +90,12 @@ public class LoginLogoutTest
         final String userName = "spike";
         final String password = "apache";
 
+        Credential credential = new UserCredential(userName, password);
         //init
-        this.authenticator.register(userName, password);
+        this.authenticator.register(credential);
 
         //start
-        this.shopClient.login(new UserCredential(userName, password));
+        this.shopClient.login(credential);
 
         Assert.assertTrue(this.identity.isLoggedIn());
         Assert.assertEquals(userName, this.identity.getUser().getUsername());
@@ -123,8 +124,9 @@ public class LoginLogoutTest
         final String userName = "spike";
         final String password = "apache";
 
+        Credential credential = new UserCredential(userName, password);
         //init
-        this.authenticator.register(userName, password);
+        this.authenticator.register(credential);
 
         //start
         this.shopClient.login(new UserCredential(userName, "123"));
@@ -139,10 +141,10 @@ public class LoginLogoutTest
         final String userName = "spike";
         final String password = "apache";
 
-        //init
-        this.authenticator.register(userName, password);
-
         Credential credential = new UserCredential(userName, password);
+        //init
+        this.authenticator.register(credential);
+
         //start
         this.shopClient.login(credential);
 

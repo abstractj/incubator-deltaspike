@@ -19,6 +19,7 @@
 package org.apache.deltaspike.test.security.impl.authentication;
 
 import org.apache.deltaspike.security.api.User;
+import org.apache.deltaspike.security.api.credential.Credential;
 import org.apache.deltaspike.security.api.credential.LoginCredential;
 import org.apache.deltaspike.security.spi.authentication.BaseAuthenticator;
 
@@ -54,8 +55,8 @@ public class TestAuthenticator extends BaseAuthenticator
         return this.user;
     }
 
-    void register(String userName, String password)
+    void register(Credential credential)
     {
-        InMemoryUserStorage.setPassword(userName, password);
+        InMemoryUserStorage.setPassword(credential);
     }
 }
