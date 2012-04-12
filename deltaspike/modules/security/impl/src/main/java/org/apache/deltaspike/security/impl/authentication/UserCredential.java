@@ -2,32 +2,32 @@ package org.apache.deltaspike.security.impl.authentication;
 
 import org.apache.deltaspike.security.api.Credential;
 
-public class UserCredential implements Credential {
+public class UserCredential implements Credential<Object> {
 
-    private String username;
-    private String password;
+    private Object username;
+    private Object password;
 
-    public UserCredential(String username) {
+    public UserCredential(Object username) {
         this.username = username;
     }
 
     @Override
-    public void setPassword(String password) {
+    public void setPassword(Object password) {
         this.password = password;
     }
 
     @Override
-    public void setUsername(String username) {
+    public void setUsername(Object username) {
         this.username = username;
     }
 
     @Override
-    public String getPassword() {
+    public Object getPassword() {
         return password;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public String getUsername() {
+    public Object getUsername() {
         return username;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

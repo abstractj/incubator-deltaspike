@@ -38,7 +38,7 @@ public interface Identity extends Serializable
      */
     boolean isLoggedIn();
 
-    Credential getCredential();
+    Credential<String> getCredential();
 
     /**
      * Attempts to authenticate the user.  This method raises the following events in response 

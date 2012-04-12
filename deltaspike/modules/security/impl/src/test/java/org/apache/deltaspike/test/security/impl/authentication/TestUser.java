@@ -2,7 +2,7 @@ package org.apache.deltaspike.test.security.impl.authentication;
 
 import org.apache.deltaspike.security.api.credential.User;
 
-public class TestUser implements User {
+public class TestUser implements User<String> {
 
     private String userId;
     private String value;

@@ -29,12 +29,12 @@ class InMemoryUserStorage
 {
     private static Map<String, String> simpleUserPasswordMapping = new ConcurrentHashMap<String, String>();
     
-    static String getPassword(String userName)
+    static String getPassword(Object userName)
     {
         return simpleUserPasswordMapping.get(userName);
     }
 
-    public static void setPassword(User user) {
-        simpleUserPasswordMapping.put(user.getUserId().toString(), user.getValue().toString());
+    public static void setPassword(User<String> user) {
+        simpleUserPasswordMapping.put(user.getUserId(), user.getValue());
     }
 }

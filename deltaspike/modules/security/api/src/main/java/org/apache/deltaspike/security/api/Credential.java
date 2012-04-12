@@ -20,12 +20,12 @@ package org.apache.deltaspike.security.api;
 
 import java.io.Serializable;
 
-public interface Credential extends Serializable {
-    void setPassword(String password);
+public interface Credential<T> extends Serializable {
+    void setPassword(T password);
 
-    void setUsername(String username);
+    void setUsername(T username);
 
-    String getPassword();
+    T getPassword();
 
-    String getUsername();
+    T getUsername();
 }
