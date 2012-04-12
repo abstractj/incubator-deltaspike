@@ -125,8 +125,8 @@ public class DefaultIdentity implements Identity
 
     private boolean isAuthenticationRequestWithDifferentUserId()
     {
-        return isLoggedIn() && this.loginCredential.getUserId() != null &&
-                !this.loginCredential.getUserId().equals(this.user.getUsername());
+        return isLoggedIn() && this.loginCredential.getCredential().getUserId() != null &&
+                !this.loginCredential.getCredential().getUserId().equals(this.user.getUsername());
     }
 
     protected boolean authenticate() throws AuthenticationException 

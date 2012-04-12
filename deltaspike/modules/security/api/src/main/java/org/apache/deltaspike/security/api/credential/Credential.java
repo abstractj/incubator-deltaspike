@@ -23,5 +23,6 @@ package org.apache.deltaspike.security.api.credential;
  */
 public interface Credential<T>
 {
+    T getUserId();
     T getValue();
 }
