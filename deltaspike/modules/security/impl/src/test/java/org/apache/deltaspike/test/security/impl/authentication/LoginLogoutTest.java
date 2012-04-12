@@ -24,6 +24,7 @@ import org.apache.deltaspike.core.impl.exclude.extension.ExcludeExtension;
 import org.apache.deltaspike.security.api.Identity;
 import org.apache.deltaspike.security.api.User;
 import org.apache.deltaspike.security.api.authentication.UnexpectedCredentialException;
+import org.apache.deltaspike.security.api.credential.Credential;
 import org.apache.deltaspike.security.api.credential.LoginCredential;
 import org.apache.deltaspike.test.util.ArchiveUtils;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -93,7 +94,7 @@ public class LoginLogoutTest
         this.authenticator.register(userName, password);
 
         //start
-        this.shopClient.login(userName, password);
+        this.shopClient.login(new UserCredential(userName, password));
 
         Assert.assertTrue(this.identity.isLoggedIn());
         Assert.assertEquals(userName, this.identity.getUser().getUsername());
@@ -126,7 +127,7 @@ public class LoginLogoutTest
         this.authenticator.register(userName, password);
 
         //start
-        this.shopClient.login(userName, "123");
+        this.shopClient.login(new UserCredential(userName, "123"));
 
         Assert.assertFalse(this.identity.isLoggedIn());
     }
@@ -141,8 +142,9 @@ public class LoginLogoutTest
         //init
         this.authenticator.register(userName, password);
 
+        Credential credential = new UserCredential(userName, password);
         //start
-        this.shopClient.login(userName, password);
+        this.shopClient.login(credential);
 
         Assert.assertTrue(this.identity.isLoggedIn());
         Assert.assertEquals(userName, this.identity.getUser().getUsername());
@@ -152,7 +154,8 @@ public class LoginLogoutTest
 
         try
         {
-            this.shopClient.login("xyz", "123");
+            credential = new UserCredential("xyz", "123");
+            this.shopClient.login(credential);
         }
         catch (UnexpectedCredentialException e)
         {

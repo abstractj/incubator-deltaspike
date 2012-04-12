@@ -37,24 +37,11 @@ public class ShopClient
     @Inject
     private Shop shop;
 
-    public void login(final String userName, final String password)
+    public void login(Credential credential)
     {
         //this.loginCredential.setUserId(userName);
         //TODO discuss #setSecurityToken
-        this.loginCredential.setCredential(new Credential<String>() {
-
-            @Override
-            public String getUserId()
-            {
-                return userName;
-            }
-
-            @Override
-            public String getValue()
-            {
-                return password;
-            }
-        });
+        this.loginCredential.setCredential(credential);
 
 
         this.identity.login();
