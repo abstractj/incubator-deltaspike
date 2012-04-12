@@ -18,23 +18,14 @@
  */
 package org.apache.deltaspike.security.api;
 
-import javax.enterprise.inject.Typed;
 import java.io.Serializable;
 
-@Typed()
-public class User implements Serializable
-{
-    private static final long serialVersionUID = -2234530384311026364L;
+public interface User extends Serializable {
+    void setPassword(String password);
 
-    private final String id;
+    void setUsername(String username);
 
-    public User(String id)
-    {
-        this.id = id;
-    }
+    String getPassword();
 
-    public String getId()
-    {
-        return id;
-    }
+    String getUsername();
 }

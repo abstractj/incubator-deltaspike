@@ -80,7 +80,7 @@ public class DefaultIdentity implements Identity
     }
 
     @Override
-    public AuthenticationResult login() 
+    public AuthenticationResult login()
     {
         try 
         {
@@ -88,7 +88,7 @@ public class DefaultIdentity implements Identity
             {
                 if (isAuthenticationRequestWithDifferentUserId())
                 {
-                    throw new UnexpectedCredentialException("active user: " + this.user.getId() +
+                    throw new UnexpectedCredentialException("active user: " + this.user.getUsername() +
                             " provided credentials: " + this.loginCredential.getUserId());
                 }
 
@@ -126,7 +126,7 @@ public class DefaultIdentity implements Identity
     private boolean isAuthenticationRequestWithDifferentUserId()
     {
         return isLoggedIn() && this.loginCredential.getUserId() != null &&
-                !this.loginCredential.getUserId().equals(this.user.getId());
+                !this.loginCredential.getUserId().equals(this.user.getUsername());
     }
 
     protected boolean authenticate() throws AuthenticationException 

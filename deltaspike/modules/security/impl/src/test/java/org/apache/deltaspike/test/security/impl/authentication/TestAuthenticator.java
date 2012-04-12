@@ -41,7 +41,7 @@ public class TestAuthenticator extends BaseAuthenticator
         if (password != null && password.equals(this.loginCredential.getCredential().getValue()))
         {
             setStatus(AuthenticationStatus.SUCCESS);
-            this.user = new User(this.loginCredential.getUserId());
+            this.user = new TestUser(this.loginCredential.getUserId());
             return;
         }
 

@@ -40,7 +40,7 @@ public class TestInquiryStorage implements InquiryStorage
     {
         if(identity.isLoggedIn())
         {
-            userInquiries.put(inquiry.getInquiryId(), new InquiryEntry(identity.getUser().getId(), inquiry));
+            userInquiries.put(inquiry.getInquiryId(), new InquiryEntry(identity.getUser().getUsername(), inquiry));
         }
         else
         {

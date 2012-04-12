@@ -22,6 +22,7 @@ import org.apache.deltaspike.core.api.provider.BeanManagerProvider;
 import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.apache.deltaspike.core.impl.exclude.extension.ExcludeExtension;
 import org.apache.deltaspike.security.api.Identity;
+import org.apache.deltaspike.security.api.User;
 import org.apache.deltaspike.security.api.authentication.UnexpectedCredentialException;
 import org.apache.deltaspike.security.api.credential.LoginCredential;
 import org.apache.deltaspike.test.util.ArchiveUtils;
@@ -87,7 +88,7 @@ public class LoginLogoutTest
     {
         final String userName = "spike";
         final String password = "apache";
-        
+
         //init
         this.authenticator.register(userName, password);
 
@@ -95,7 +96,7 @@ public class LoginLogoutTest
         this.shopClient.login(userName, password);
 
         Assert.assertTrue(this.identity.isLoggedIn());
-        Assert.assertEquals(userName, this.identity.getUser().getId());
+        Assert.assertEquals(userName, this.identity.getUser().getUsername());
 
         Assert.assertNotNull(this.shopClient.requestNewProduct("Security module for DeltaSpike"));
 
@@ -144,7 +145,7 @@ public class LoginLogoutTest
         this.shopClient.login(userName, password);
 
         Assert.assertTrue(this.identity.isLoggedIn());
-        Assert.assertEquals(userName, this.identity.getUser().getId());
+        Assert.assertEquals(userName, this.identity.getUser().getUsername());
 
         //X TODO stop and start new request via ContextControl - instead of:
         BeanProvider.getContextualReference(LoginCredential.class).invalidate();
