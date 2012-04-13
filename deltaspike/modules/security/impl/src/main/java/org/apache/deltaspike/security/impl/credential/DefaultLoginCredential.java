@@ -57,6 +57,15 @@ public class DefaultLoginCredential implements LoginCredential
         //this.userId = null;
     }
 
+    @Override
+    public Boolean isValidUser(User user) {
+        //TODO must be refactored
+        if(user != null && user.equals(this.user)){
+            return true;
+        }
+        return false;
+    }
+
     protected void setValid(@Observes PostAuthenticateEvent event)
     {
         invalidate();

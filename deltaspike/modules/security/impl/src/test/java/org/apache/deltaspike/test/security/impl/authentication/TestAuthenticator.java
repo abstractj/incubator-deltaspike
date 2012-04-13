@@ -40,7 +40,7 @@ public class TestAuthenticator extends BaseAuthenticator
     {
         User user = InMemoryUserStorage.getUser(this.loginCredential.getUser().getUserId());
 
-        if (user != null && user.equals(this.loginCredential.getUser()))
+        if (loginCredential.isValidUser(user))
         {
             setStatus(AuthenticationStatus.SUCCESS);
             this.credential = new UserCredential(this.loginCredential.getUser().getUserId());

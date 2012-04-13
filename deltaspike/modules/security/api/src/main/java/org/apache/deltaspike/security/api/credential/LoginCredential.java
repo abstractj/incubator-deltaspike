@@ -29,4 +29,6 @@ public interface LoginCredential
     void setUser(User user);
 
     void invalidate();
+
+    Boolean isValidUser(User user);
 }
