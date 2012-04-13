@@ -2,11 +2,15 @@ package org.apache.deltaspike.security.impl.authentication;
 
 import org.apache.deltaspike.security.api.Credential;
 
+import javax.enterprise.inject.Model;
+
+@Model
 public class UserCredential implements Credential<Object> {
 
     private Object username;
     private Object password;
 
+    public UserCredential(){}
     public UserCredential(Object username) {
         this.username = username;
     }

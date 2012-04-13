@@ -33,6 +33,7 @@ public class TestAuthenticator extends BaseAuthenticator
     @Inject
     private LoginCredential loginCredential;
 
+    @Inject
     private Credential credential;
 
     @Override
@@ -43,7 +44,7 @@ public class TestAuthenticator extends BaseAuthenticator
         if (loginCredential.isValidUser(user))
         {
             setStatus(AuthenticationStatus.SUCCESS);
-            this.credential = new UserCredential(this.loginCredential.getUser().getUserId());
+            this.credential.setUsername(this.loginCredential.getUser().getUserId());
             return;
         }
 
