@@ -23,7 +23,7 @@ import org.apache.deltaspike.core.api.provider.BeanProvider;
 import org.apache.deltaspike.core.impl.exclude.extension.ExcludeExtension;
 import org.apache.deltaspike.security.api.Identity;
 import org.apache.deltaspike.security.api.authentication.UnexpectedCredentialException;
-import org.apache.deltaspike.security.api.credential.User;
+import org.apache.deltaspike.security.api.credential.UserAuthInfo;
 import org.apache.deltaspike.security.api.credential.LoginCredential;
 import org.apache.deltaspike.test.util.ArchiveUtils;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -89,12 +89,12 @@ public class LoginLogoutTest
         final String userName = "spike";
         final String password = "apache";
 
-        User user = new TestUser(userName, password);
+        UserAuthInfo userAuthInfo = new TestUserAuthInfo(userName, password);
         //init
-        this.authenticator.register(user);
+        this.authenticator.register(userAuthInfo);
 
         //start
-        this.shopClient.login(user);
+        this.shopClient.login(userAuthInfo);
 
         Assert.assertTrue(this.identity.isLoggedIn());
         Assert.assertEquals(userName, this.identity.getCredential().getUsername());
@@ -123,12 +123,12 @@ public class LoginLogoutTest
         final String userName = "spike";
         final String password = "apache";
 
-        User user = new TestUser(userName, password);
+        UserAuthInfo userAuthInfo = new TestUserAuthInfo(userName, password);
         //init
-        this.authenticator.register(user);
+        this.authenticator.register(userAuthInfo);
 
         //start
-        this.shopClient.login(new TestUser(userName, "123"));
+        this.shopClient.login(new TestUserAuthInfo(userName, "123"));
 
         Assert.assertFalse(this.identity.isLoggedIn());
     }
@@ -140,12 +140,12 @@ public class LoginLogoutTest
         final String userName = "spike";
         final String password = "apache";
 
-        User user = new TestUser(userName, password);
+        UserAuthInfo userAuthInfo = new TestUserAuthInfo(userName, password);
         //init
-        this.authenticator.register(user);
+        this.authenticator.register(userAuthInfo);
 
         //start
-        this.shopClient.login(user);
+        this.shopClient.login(userAuthInfo);
 
         Assert.assertTrue(this.identity.isLoggedIn());
         Assert.assertEquals(userName, this.identity.getCredential().getUsername());
@@ -155,8 +155,8 @@ public class LoginLogoutTest
 
         try
         {
-            user = new TestUser("xyz", "123");
-            this.shopClient.login(user);
+            userAuthInfo = new TestUserAuthInfo("xyz", "123");
+            this.shopClient.login(userAuthInfo);
         }
         catch (UnexpectedCredentialException e)
         {

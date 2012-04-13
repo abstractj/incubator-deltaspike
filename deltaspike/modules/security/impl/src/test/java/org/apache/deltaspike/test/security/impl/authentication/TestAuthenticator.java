@@ -19,9 +19,8 @@
 package org.apache.deltaspike.test.security.impl.authentication;
 
 import org.apache.deltaspike.security.api.Credential;
-import org.apache.deltaspike.security.api.credential.User;
+import org.apache.deltaspike.security.api.credential.UserAuthInfo;
 import org.apache.deltaspike.security.api.credential.LoginCredential;
-import org.apache.deltaspike.security.impl.authentication.UserCredential;
 import org.apache.deltaspike.security.spi.authentication.BaseAuthenticator;
 
 import javax.enterprise.context.RequestScoped;
@@ -39,12 +38,12 @@ public class TestAuthenticator extends BaseAuthenticator
     @Override
     public void authenticate()
     {
-        String password = InMemoryUserStorage.getPassword(this.loginCredential.getUser().getUserId());
+        String password = InMemoryUserStorage.getPassword(this.loginCredential.getUserAuthInfo().getUserId());
 
-        if (password != null && password.equals(this.loginCredential.getUser().getValue()))
+        if (password != null && password.equals(this.loginCredential.getUserAuthInfo().getValue()))
         {
             setStatus(AuthenticationStatus.SUCCESS);
-            this.credential.setUsername(this.loginCredential.getUser().getUserId());
+            this.credential.setUsername(this.loginCredential.getUserAuthInfo().getUserId());
             return;
         }
 
@@ -57,8 +56,8 @@ public class TestAuthenticator extends BaseAuthenticator
         return this.credential;
     }
 
-    void register(User user)
+    void register(UserAuthInfo userAuthInfo)
     {
-        InMemoryUserStorage.setPassword(user);
+        InMemoryUserStorage.setPassword(userAuthInfo);
     }
 }

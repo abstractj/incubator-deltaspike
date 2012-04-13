@@ -1,13 +1,13 @@
 package org.apache.deltaspike.test.security.impl.authentication;
 
-import org.apache.deltaspike.security.api.credential.User;
+import org.apache.deltaspike.security.api.credential.UserAuthInfo;
 
-public class TestUser implements User<String> {
+public class TestUserAuthInfo implements UserAuthInfo<String> {
 
     private String userId;
     private String value;
 
-    public TestUser(String userId, String value) {
+    public TestUserAuthInfo(String userId, String value) {
         this.userId = userId;
         this.value = value;
     }

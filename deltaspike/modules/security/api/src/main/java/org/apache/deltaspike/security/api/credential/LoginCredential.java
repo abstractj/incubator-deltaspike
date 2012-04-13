@@ -24,11 +24,11 @@ package org.apache.deltaspike.security.api.credential;
  */
 public interface LoginCredential
 {
-    User getUser();
+    UserAuthInfo getUserAuthInfo();
 
-    void setUser(User user);
+    void setUserAuthInfo(UserAuthInfo userAuthInfo);
 
     void invalidate();
 
-    Boolean isValidUser(User user);
+    Boolean isValidUser(UserAuthInfo userAuthInfo);
 }

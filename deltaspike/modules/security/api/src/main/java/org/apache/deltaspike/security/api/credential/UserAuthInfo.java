@@ -23,7 +23,7 @@ import java.io.Serializable;
 /**
  * Contains a single credential, such as a password
  */
-public interface User<T> extends Serializable
+public interface UserAuthInfo<T> extends Serializable
 {
     T getUserId();
     T getValue();

@@ -20,7 +20,7 @@ package org.apache.deltaspike.security.impl.credential;
 
 import org.apache.deltaspike.security.api.authentication.event.LoginFailedEvent;
 import org.apache.deltaspike.security.api.authentication.event.PostAuthenticateEvent;
-import org.apache.deltaspike.security.api.credential.User;
+import org.apache.deltaspike.security.api.credential.UserAuthInfo;
 import org.apache.deltaspike.security.api.credential.LoginCredential;
 
 import javax.enterprise.context.RequestScoped;
@@ -30,37 +30,37 @@ import javax.inject.Named;
 /**
  * The default LoginCredential implementation.  This implementation allows for a
  * username and plain text password to be set, and uses the PasswordCredential
- * implementation of the User interface for authentication.
+ * implementation of the UserAuthInfo interface for authentication.
  */
 @Named("loginCredential")
 @RequestScoped
 public class DefaultLoginCredential implements LoginCredential
 {
-    private User user;
+    private UserAuthInfo userAuthInfo;
 
     //private String userId;
 
-    public User getUser()
+    public UserAuthInfo getUserAuthInfo()
     {
-        return user;
+        return userAuthInfo;
     }
 
-    public void setUser(User user)
+    public void setUserAuthInfo(UserAuthInfo userAuthInfo)
     {
-        this.user = user;
-        //X TODO manager.fireEvent(new CredentialsUpdatedEvent(this.user));
+        this.userAuthInfo = userAuthInfo;
+        //X TODO manager.fireEvent(new CredentialsUpdatedEvent(this.userAuthInfo));
     }
 
     public void invalidate()
     {
-        this.user = null;
+        this.userAuthInfo = null;
         //this.userId = null;
     }
 
     @Override
-    public Boolean isValidUser(User user) {
+    public Boolean isValidUser(UserAuthInfo userAuthInfo) {
         //TODO must be refactored
-        if(user != null && user.equals(this.user)){
+        if(userAuthInfo != null && userAuthInfo.equals(this.userAuthInfo)){
             return true;
         }
         return false;
@@ -85,6 +85,6 @@ public class DefaultLoginCredential implements LoginCredential
     @Override
     public String toString() 
     {
-        return "LoginCredential[" + (this.user.getUserId() != null ? this.user.getUserId() : "unknown" ) + "]";
+        return "LoginCredential[" + (this.userAuthInfo.getUserId() != null ? this.userAuthInfo.getUserId() : "unknown" ) + "]";
     }
 }
