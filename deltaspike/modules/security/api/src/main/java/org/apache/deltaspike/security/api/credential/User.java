@@ -18,11 +18,15 @@
  */
 package org.apache.deltaspike.security.api.credential;
 
+import java.io.Serializable;
+
 /**
  * Contains a single credential, such as a password
  */
-public interface User<T>
+public interface User<T> extends Serializable
 {
     T getUserId();
     T getValue();
+    void setUserId(T userId);
+    void setValue(T value);
 }

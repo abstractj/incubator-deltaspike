@@ -21,4 +21,14 @@ public class TestUser implements User<String> {
     public String getValue() {
         return value;
     }
+
+    @Override
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public void setValue(String value) {
+        this.value = value;
+    }
 }
