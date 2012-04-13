@@ -27,14 +27,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @Exclude
 class InMemoryUserStorage
 {
-    private static Map<String, String> simpleUserPasswordMapping = new ConcurrentHashMap<String, String>();
+    private static Map<String, User> simpleUserPasswordMapping = new ConcurrentHashMap<String, User>();
     
-    static String getPassword(Object userName)
+    static User getUser(Object userId)
     {
-        return simpleUserPasswordMapping.get(userName);
+        return simpleUserPasswordMapping.get(userId);
     }
 
     public static void setPassword(User<String> user) {
-        simpleUserPasswordMapping.put(user.getUserId(), user.getValue());
+        simpleUserPasswordMapping.put(user.getUserId(), user);
     }
 }

@@ -38,9 +38,9 @@ public class TestAuthenticator extends BaseAuthenticator
     @Override
     public void authenticate()
     {
-        String password = InMemoryUserStorage.getPassword(this.loginCredential.getUser().getUserId());
+        User user = InMemoryUserStorage.getUser(this.loginCredential.getUser().getUserId());
 
-        if (password != null && password.equals(this.loginCredential.getUser().getValue()))
+        if (user != null && user.equals(this.loginCredential.getUser()))
         {
             setStatus(AuthenticationStatus.SUCCESS);
             this.credential = new UserCredential(this.loginCredential.getUser().getUserId());
