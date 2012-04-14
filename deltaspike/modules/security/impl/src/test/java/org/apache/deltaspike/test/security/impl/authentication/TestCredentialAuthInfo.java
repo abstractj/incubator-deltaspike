@@ -1,19 +1,19 @@
 package org.apache.deltaspike.test.security.impl.authentication;
 
-import org.apache.deltaspike.security.api.credential.UserAuthInfo;
+import org.apache.deltaspike.security.api.credential.CredentialAuthInfo;
 
-public class TestUserAuthInfo implements UserAuthInfo<String> {
+public class TestCredentialAuthInfo implements CredentialAuthInfo<String> {
 
     private String userId;
     private String value;
 
-    public TestUserAuthInfo(String userId, String value) {
+    public TestCredentialAuthInfo(String userId, String value) {
         this.userId = userId;
         this.value = value;
     }
 
     @Override
-    public String getUserId() {
+    public String getCredentialId() {
         return userId;
     }
 
@@ -23,8 +23,8 @@ public class TestUserAuthInfo implements UserAuthInfo<String> {
     }
 
     @Override
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setCredentialId(String credentialId) {
+        this.userId = credentialId;
     }
 
     @Override
