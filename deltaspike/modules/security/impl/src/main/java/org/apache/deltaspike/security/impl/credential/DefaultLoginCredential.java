@@ -57,15 +57,6 @@ public class DefaultLoginCredential implements LoginCredential
         //this.userId = null;
     }
 
-    @Override
-    public Boolean isValidUser(CredentialAuthInfo credentialAuthInfo) {
-        //TODO must be refactored
-        if(credentialAuthInfo != null && credentialAuthInfo.equals(this.credentialAuthInfo)){
-            return true;
-        }
-        return false;
-    }
-
     protected void setValid(@Observes PostAuthenticateEvent event)
     {
         invalidate();

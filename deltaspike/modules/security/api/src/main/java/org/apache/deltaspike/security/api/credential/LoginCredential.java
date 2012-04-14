@@ -29,6 +29,4 @@ public interface LoginCredential
     void setCredentialAuthInfo(CredentialAuthInfo credentialAuthInfo);
 
     void invalidate();
-
-    Boolean isValidUser(CredentialAuthInfo credentialAuthInfo);
 }
