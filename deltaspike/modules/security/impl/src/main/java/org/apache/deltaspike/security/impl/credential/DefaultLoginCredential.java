@@ -76,6 +76,7 @@ public class DefaultLoginCredential implements LoginCredential
     @Override
     public String toString() 
     {
-        return "LoginCredential[" + (this.credentialAuthInfo.getCredentialId() != null ? this.credentialAuthInfo.getCredentialId() : "unknown" ) + "]";
+        return "LoginCredential[" + (this.credentialAuthInfo.getCredentialId() != null ?
+                this.credentialAuthInfo.getCredentialId() : "unknown" ) + "]";
     }
 }

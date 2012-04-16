@@ -88,8 +88,10 @@ public class DefaultIdentity implements Identity
             {
                 if (isAuthenticationRequestWithDifferentUserId())
                 {
-                    throw new UnexpectedCredentialException("active credential: " + this.credential.getUsername() +
-                            " provided credentials: " + this.loginCredential.getCredentialAuthInfo().getCredentialId());
+                    throw new UnexpectedCredentialException("active credential: " +
+                            this.credential.getUsername() +
+                            " provided credentials: " +
+                            this.loginCredential.getCredentialAuthInfo().getCredentialId());
                 }
 
                 beanManager.fireEvent(new AlreadyLoggedInEvent());
@@ -100,7 +102,8 @@ public class DefaultIdentity implements Identity
 
             if (success) 
             {
-                beanManager.fireEvent(new LoggedInEvent()); //X TODO beanManager.fireEvent(new LoggedInEvent(credential));
+                beanManager.fireEvent(new LoggedInEvent());
+                //X TODO beanManager.fireEvent(new LoggedInEvent(credential));
                 return AuthenticationResult.SUCCESS;
             }
 
@@ -126,7 +129,8 @@ public class DefaultIdentity implements Identity
     private boolean isAuthenticationRequestWithDifferentUserId()
     {
         return isLoggedIn() && this.loginCredential.getCredentialAuthInfo().getCredentialId() != null &&
-                !this.loginCredential.getCredentialAuthInfo().getCredentialId().equals(this.credential.getUsername());
+                !this.loginCredential.getCredentialAuthInfo()
+                        .getCredentialId().equals(this.credential.getUsername());
     }
 
     protected boolean authenticate() throws AuthenticationException 
